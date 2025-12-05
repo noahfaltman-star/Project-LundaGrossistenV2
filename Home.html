@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Document</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+			integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		/>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<div class="topHeader">
+				<button class="headerBtn Cart">
+					<i class="fa-solid fa-cart-shopping"></i>
+				</button>
+				<a href="./Home.html" class="link-title"><h1 class="title">Lundagrossisten</h1></a>
+				<button class="headerBtn Profile">
+					<i class="fa-solid fa-user"></i>
+				</button>
+			</div>
+			<div class="bottomHeader">
+				<div class="categories">
+					<button class="textbutton" onclick="toggleDropdown()">
+						Meny
+					</button>
+
+					<div id="myDropdown" class="dropdown-menu">
+						<a class="Drop-Product" href="#">Mejeri</a>
+						<a class="Drop-Product" href="./Kött.html">Kött</a>
+						<a class="Drop-Product" href="#">Grönsaker</a>
+						<a class="Drop-Product" href="#">Frukter</a>
+					</div>
+				</div>
+
+				<input
+					type="text"
+					placeholder="Skriv här..."
+					class="searchBar"
+				/>
+			</div>
+		</header>
+		<main class="">Home</main>
+
+		<footer>
+			<p>Kontakta oss på: Lunda.grossisten@hotmail.com</p>
+			<p>&copy;Lundagrossisten AB 2025</p>
+		</footer>
+
+		<script src="app.js"></script>
+	</body>
+</html>

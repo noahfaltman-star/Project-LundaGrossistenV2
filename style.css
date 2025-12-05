@@ -1,0 +1,122 @@
+* {
+	box-sizing: border-box;
+}
+html,
+body {
+	/* Gör att body fyller hela höjden av viewporten */
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body {
+	/* Sätter layouten till Flexbox */
+	display: flex;
+	/* Arrangerar elementen vertikalt */
+	flex-direction: column;
+}
+header {
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	/* Denna egenskap tvingar 'main' att ta upp all ledig plats 
+       mellan headern och footern, vilket "trycker ner" footern. */
+	flex-grow: 1;
+}
+
+footer {
+	background-color: rgb(169, 205, 237);
+	display: flex;
+}
+/* Top-Header */
+.topHeader {
+	background-color: rgb(169, 205, 237);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.headerBtn {
+	background: none;
+	border: none;
+}
+
+.headerBtn :hover {
+	color: rgb(84, 83, 83);
+	cursor: pointer;
+}
+
+.headerBtn i {
+	display: block;
+	font-size: 25px;
+	color: black;
+	margin-top: 7px;
+}
+
+.title {
+	display: flex;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 2.2rem;
+	padding: 4px;
+	color: yellow;
+	cursor: pointer;
+	text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
+}
+
+.title:hover {
+	color: rgb(227, 227, 2);
+	text-shadow: 4px 5px 3px rgb(85, 83, 83);
+}
+
+.link-title {
+	text-decoration: none;
+}
+/* END */
+
+/* Bottom-Header */
+.bottomHeader {
+	background-color: burlywood;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Stilar för dropdown-menyn */
+.dropdown-menu {
+	/* Positionering: Visas relativt till sin normala position */
+	position: absolute;
+	/* Döljer menyn initialt */
+	display: none;
+	/* Placering: Flyttar menyn under knappen */
+	top: 125px; /* Justera detta värde för att placera menyn korrekt under knappen */
+	left: 0;
+
+	/* Utseende */
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 10; /* Se till att menyn visas över annat innehåll */
+	border-radius: 4px;
+}
+
+/* Stilar för länkarna inuti menyn */
+.Drop-Product {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+/* Hover-effekt på länkarna */
+.Drop-Product:hover {
+	background-color: #d9d9d9; /* Använder din angivna grå färg */
+}
+
+/* Klass som läggs till med JavaScript för att visa menyn */
+.show {
+	display: block;
+}
+
+/* END */
