@@ -16,3 +16,13 @@ window.onclick = function (event) {
 		}
 	}
 };
+
+
+
+class Products {
+	constructor(product,image,info,price){
+		
+	}
+}
+
+
