@@ -1,60 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>Document</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-			integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<header>
-			<div class="topHeader">
-				<button class="headerBtn Cart">
-					<i class="fa-solid fa-cart-shopping"></i>
-				</button>
-				<a href="./Home.html" class="link-title"><h1 class="title">Lundagrossisten</h1></a>
-				<button class="headerBtn Profile">
-					<i class="fa-solid fa-user"></i>
-				</button>
-			</div>
-			<div class="bottomHeader">
-				<div class="categories">
-					<button class="textbutton" onclick="toggleDropdown()">
-						Meny
-					</button>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lundagrossisten</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
-					<div id="myDropdown" class="dropdown-menu">
-						<a class="Drop-Product" href="#">Mejeri</a>
-						<a class="Drop-Product" href="./Kött.html">Kött</a>
-						<a class="Drop-Product" href="#">Grönsaker</a>
-						<a class="Drop-Product" href="#">Frukter</a>
-					</div>
-				</div>
+    <header>
+        <button id="menu-btn" onclick="toggleMenu()" aria-label="Öppna meny">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-				<input
-					type="text"
-					placeholder="Skriv här..."
-					class="searchBar"
-				/>
-			</div>
-		</header>
-		<main class="">Home</main>
+        <div class="logo">Lundagrossisten</div>
+        
+        <nav id="category-nav">
+            <button class="nav-btn active" data-category="all">Alla</button>
+            <button class="nav-btn" data-category="mejeri">Mejeri</button>
+            <button class="nav-btn" data-category="chark">Chark</button>
+            <button class="nav-btn" data-category="vego">Grönt</button>
+        </nav>
 
-		<footer>
-			<p>Kontakta oss på: Lunda.grossisten@hotmail.com</p>
-			<p>&copy;Lundagrossisten AB 2025</p>
-		</footer>
+        <div class="cart-icon-container" onclick="openCartModal()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-counter">0</span>
+        </div>
+    </header>
 
-		<script src="app.js"></script>
-	</body>
+    <main>
+        <div id="product-container" class="product-grid">
+            </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Lundagrossisten - Grupparbete</p>
+    </footer>
+
+    <div id="cart-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h2>Din Varukorg</h2>
+                <button class="close-btn" onclick="closeModal('cart-modal')">&times;</button>
+            </div>
+            
+            <div id="cart-items">
+                <p>Varukorgen är tom.</p>
+            </div>
+            
+            <div class="cart-total" style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
+                <strong>Totalt: <span id="total-price">0</span> kr</strong>
+            </div>
+            
+            <button class="buy-btn" style="width:100%; margin-top:15px; background-color:#2874f0;">Gå till kassan</button>
+        </div>
+    </div>
+
+    <div id="product-modal" class="modal-overlay hidden">
+        <div class="modal-content product-detail-content">
+            <button class="close-btn" onclick="closeModal('product-modal')">&times;</button>
+            
+            <div id="modal-product-info" style="text-align:center;">
+                <h2 id="modal-title">Produktnamn</h2>
+                <img id="modal-img" src="" alt="Produktbild" style="max-width:100%; height:200px; object-fit:contain; margin:15px 0;">
+                <p id="modal-desc" style="color:#666; margin-bottom:15px;">Beskrivning</p>
+                <h3 id="modal-price" style="color:#0f2a4a; margin-bottom:15px;"></h3>
+                <button id="modal-add-btn" class="buy-btn">Lägg i varukorg</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main-VG.js"></script>
+</body>
 </html>

@@ -1,122 +1,319 @@
+/* --- 1. GRUNDINSTÄLLNINGAR (RESET) --- */
 * {
-	box-sizing: border-box;
+    /* Gör att padding och border räknas in i bredden, så element inte blir bredare än man tänkt */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* En modern och snygg font-familj */
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
-html,
+
 body {
-	/* Gör att body fyller hela höjden av viewporten */
-	height: 100%;
-	margin: 0;
-	padding: 0;
-}
-body {
-	/* Sätter layouten till Flexbox */
-	display: flex;
-	/* Arrangerar elementen vertikalt */
-	flex-direction: column;
-}
-header {
-	display: flex;
-	flex-direction: column;
+    /* Ljus blå-grå bakgrund */
+    background-color: #f0f4f8;
+    
+    /* Sticky Footer-tricket:
+       Vi sätter minsta höjden till 100% av skärmen (100vh)
+       och använder Flexbox för att kunna styra foten. */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 main {
-	/* Denna egenskap tvingar 'main' att ta upp all ledig plats 
-       mellan headern och footern, vilket "trycker ner" footern. */
-	flex-grow: 1;
+    /* 'flex: 1' betyder: "Ta upp all plats som blir över".
+       Detta trycker ner footern till botten. */
+    flex: 1;
+    width: 100%;
+    max-width: 1200px; /* Sidan blir aldrig bredare än så här */
+    margin: 0 auto;    /* Centrerar main-blocket på sidan */
+    padding: 40px 20px;
 }
 
+/* --- 2. HEADER & NAVIGATION (BLÅTT TEMA) --- */
+header {
+    background-color: #0f2a4a; /* Mörk marinblå */
+    color: white;
+    padding: 1rem 2rem;
+    
+    /* Flexbox för att lägga loggan, menyn och vagnen på rad */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Sticky gör att menyn "fastnar" i toppen när man scrollar */
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Ligger över annat innehåll */
+    
+    box-shadow: 0 4px 12px rgba(0, 40, 100, 0.2); /* Snygg skugga */
+    border-bottom: 3px solid #2874f0; /* Ljusblå linje under */
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Meny-knappar (Navigering) */
+.nav-btn {
+    background: none;
+    border: none;
+    color: #b0c4de; /* Ljusgrå-blå text */
+    font-size: 1rem;
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 8px 15px;
+    transition: all 0.3s ease; /* Gör att färgbyten sker mjukt */
+    border-radius: 20px;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-btn.active {
+    background-color: #2874f0; /* Den valda kategorin blir kornblå */
+    color: white;
+    font-weight: bold;
+}
+
+/* Hamburgare-knappen (Dold på datorer, visas på mobil) */
+#menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* Varukorgs-ikonen */
+.cart-icon-container {
+    position: relative; /* Behövs för att kunna placera siffran (counter) inuti */
+    cursor: pointer;
+    font-size: 1.4rem;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.cart-icon-container:hover {
+    background-color: #2874f0;
+}
+
+/* Den lilla röda/orangea siffran */
+#cart-counter {
+    position: absolute; /* Placeras fritt inuti föräldern */
+    top: -2px;
+    right: -2px;
+    background-color: #ff9900;
+    color: #0f2a4a;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* --- 3. PRODUKTER (GRID SYSTEM) --- */
+.product-grid {
+    display: grid;
+    /* DETTA ÄR NYCKELN TILL RESPONSIVITET:
+       'auto-fit': Skapa så många kolumner som får plats.
+       'minmax': En kolumn måste vara minst 250px, men max 300px. */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+    
+    /* Centrerar hela rutnätet mitt på sidan */
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.product-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(136, 160, 185, 0.15);
+    text-align: center;
+    cursor: pointer;
+    
+    /* Ser till att knappen hamnar längst ner i kortet */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto; /* Centrerar kortet i sin kolumn */
+    
+    /* Animationer */
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 2px solid transparent; 
+}
+
+/* När man hovrar (för musen) över ett kort */
+.product-card:hover {
+    transform: translateY(-8px); /* Kortet lyfter */
+    border-color: #2874f0; /* Blå kantlinje dyker upp */
+    box-shadow: 0 15px 30px rgba(40, 116, 240, 0.15);
+}
+
+.product-card img {
+    max-width: 100%;
+    height: 180px;
+    object-fit: contain; /* Hela bilden syns utan att klippas */
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.product-card:hover img {
+    transform: scale(1.05); /* Bilden zoomas in lite */
+}
+
+.product-card h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #0f2a4a;
+}
+
+.product-card p {
+    color: #5d748a;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Köp-knappen */
+.buy-btn {
+    background-color: #2874f0;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+    width: 100%;
+}
+
+.buy-btn:hover {
+    background-color: #0056b3;
+}
+
+.buy-btn:active {
+    transform: scale(0.98); /* Klickeffekt (knappen trycks in) */
+}
+
+/* --- 4. FOOTER --- */
 footer {
-	background-color: rgb(169, 205, 237);
-	display: flex;
-}
-/* Top-Header */
-.topHeader {
-	background-color: rgb(169, 205, 237);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-left: 1rem;
-	padding-right: 1rem;
+    background-color: #0f2a4a;
+    color: #b0c4de;
+    text-align: center;
+    padding: 30px;
+    margin-top: auto;
+    border-top: 4px solid #2874f0;
 }
 
-.headerBtn {
-	background: none;
-	border: none;
+/* --- 5. MODALER (POP-UPS) --- */
+.modal-overlay {
+    position: fixed; /* Låst till skärmen, flyttar sig inte när man scrollar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 42, 74, 0.85); /* Halvgenomskinlig bakgrund */
+    
+    /* Centrerar rutan mitt på skärmen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    z-index: 1000; /* Ligger överst av allt */
+    backdrop-filter: blur(4px); /* Gör bakgrunden suddig */
 }
 
-.headerBtn :hover {
-	color: rgb(84, 83, 83);
-	cursor: pointer;
+/* Denna klass togglas av JS för att visa/dölja */
+.hidden {
+    display: none;
 }
 
-.headerBtn i {
-	display: block;
-	font-size: 25px;
-	color: black;
-	margin-top: 7px;
+.modal-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    animation: zoomIn 0.3s ease; /* Liten öppningsanimation */
 }
 
-.title {
-	display: flex;
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 2.2rem;
-	padding: 4px;
-	color: yellow;
-	cursor: pointer;
-	text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
 }
 
-.title:hover {
-	color: rgb(227, 227, 2);
-	text-shadow: 4px 5px 3px rgb(85, 83, 83);
+.close-btn:hover {
+    color: #2874f0;
 }
 
-.link-title {
-	text-decoration: none;
-}
-/* END */
-
-/* Bottom-Header */
-.bottomHeader {
-	background-color: burlywood;
-	display: flex;
-	justify-content: space-between;
+/* Definierar animationen för modalen */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* Stilar för dropdown-menyn */
-.dropdown-menu {
-	/* Positionering: Visas relativt till sin normala position */
-	position: absolute;
-	/* Döljer menyn initialt */
-	display: none;
-	/* Placering: Flyttar menyn under knappen */
-	top: 125px; /* Justera detta värde för att placera menyn korrekt under knappen */
-	left: 0;
+/* --- 6. MOBILANPASSNING (Media Queries) --- */
+/* Koden här inne körs BARA om skärmen är mindre än 768px */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
 
-	/* Utseende */
-	background-color: #f9f9f9;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 10; /* Se till att menyn visas över annat innehåll */
-	border-radius: 4px;
+    #menu-btn {
+        display: block; /* Visa hamburgaren */
+    }
+
+    #category-nav {
+        display: none; /* Dölj vanliga menyn först */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #0f2a4a;
+        flex-direction: column; /* Stapla länkarna på höjden */
+        padding: 10px 0;
+        z-index: 99;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* När JS lägger till klassen 'open' visas menyn */
+    #category-nav.open {
+        display: flex;
+    }
+
+    .nav-btn {
+        width: 100%;
+        text-align: left;
+        padding: 15px 25px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        margin: 0;
+    }
 }
-
-/* Stilar för länkarna inuti menyn */
-.Drop-Product {
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-}
-
-/* Hover-effekt på länkarna */
-.Drop-Product:hover {
-	background-color: #d9d9d9; /* Använder din angivna grå färg */
-}
-
-/* Klass som läggs till med JavaScript för att visa menyn */
-.show {
-	display: block;
-}
-
-/* END */
