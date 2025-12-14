@@ -1,247 +1,287 @@
+/* --- GRUNDINSTÄLLNINGAR --- */
 * {
 	box-sizing: border-box;
-}
-html,
-body {
-	/* Gör att body fyller hela höjden av viewporten */
-	height: 100%;
 	margin: 0;
 	padding: 0;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 body {
-	/* Sätter layouten till Flexbox */
-	display: flex;
-	/* Arrangerar elementen vertikalt */
-	flex-direction: column;
-}
-header {
+	background-color: #f0f4f8;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 }
 
 main {
-	/* Denna egenskap tvingar 'main' att ta upp all ledig plats 
-       mellan headern och footern, vilket "trycker ner" footern. */
 	flex-grow: 1;
+	flex-shrink: 1;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 40px 20px;
 }
 
-/* Top-Header */
-.topHeader {
+/* --- 2. HEADER & NAVIGATION (BLÅTT TEMA) --- */
+header {
 	background-color: rgb(169, 205, 237);
+	padding: 1rem 2rem;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 4px 12px rgba(0, 40, 100, 0.2);
+	border-bottom: 3px solid rgb(0, 0, 0);
+}
+
+.logo {
+	color: #ff9900;
+	text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
+	font-size: 1.6rem;
+	font-weight: 800;
+	letter-spacing: 0.5px;
+	align-self: center;
+}
+
+#header-interaction {
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+
+/* Meny-knappar (Navigering) */
+.nav-btn {
+	background: none;
+	border: none;
+	color: #000000;
+	font-size: 1rem;
+	margin: 0 5px;
+	cursor: pointer;
+	padding: 8px 15px;
+	transition: all 0.3s ease;
+	border-radius: 20px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.nav-btn:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: white;
+}
+
+.nav-btn.active {
+	font-weight: bold;
+}
+
+/* Hamburgare-knappen (Dold på datorer, visas på mobil) */
+#menu-btn {
+	display: none; /* Dold som standard */
+	background: none;
+	border: none;
+	color: rgb(0, 0, 0);
+	font-size: 1.5rem;
+	cursor: pointer;
+	margin-right: 15px;
+}
+
+/* Varukorgs-ikonen */
+.cart-icon-container {
+	position: relative;
+	cursor: pointer;
+	font-size: 1.4rem;
+	margin-left: 20px;
+	padding: 10px;
+	border-radius: 50%;
+	transition: background-color 0.2s;
+}
+
+.cart-icon-container:hover {
+	background-color: white;
+}
+
+/* Den lilla röda/orangea siffran till kundvagen */
+#cart-counter {
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	background-color: #ff9900;
+	color: #0f2a4a;
+	font-size: 0.75rem;
+	font-weight: bold;
+	border-radius: 50%;
+	padding: 2px 6px;
+	min-width: 18px;
+	text-align: center;
+}
+
+/* --- MODAL (POP-UPS) till kundvagnen--- */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(227, 227, 228, 0.85);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	backdrop-filter: blur(4px);
+}
+/* Titlen till kundvagnen */
+.modal-header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 15px;
+}
+/* Total summan till kundvagnen */
+.cart-total {
+	margin-top: 20px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+	text-align: right;
+}
+/* Köp knappen till kundvagnen */
+.buy-btn {
+	width: 100%;
+	height: 50px;
+	margin-top: 15px;
+	background-color: #2874f0;
+	border-radius: 1rem;
 }
 
-.headerBtn {
+/* Denna klass togglas av JS för att visa/dölja */
+.hidden {
+	display: none !important;
+}
+
+.modal-content {
+	background-color: white;
+	padding: 40px;
+	border-radius: 16px;
+	width: 90%;
+	max-width: 500px;
+	position: relative;
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+	animation: zoomIn 0.3s ease;
+}
+
+.close-btn {
+	position: absolute;
+	top: 15px;
+	right: 20px;
+	font-size: 2rem;
 	background: none;
 	border: none;
-}
-
-.headerBtn :hover {
-	color: rgb(84, 83, 83);
 	cursor: pointer;
+	color: #999;
+	transition: color 0.2s;
 }
 
-.headerBtn i {
-	display: block;
-	font-size: 25px;
-	color: black;
-	margin-top: 10px;
+.close-btn:hover {
+	color: #2874f0;
 }
 
-.title {
-	display: flex;
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 2.2rem;
-	padding: 4px;
-	color: yellow;
-	cursor: pointer;
-	text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
+/* Varukorgsmodal specifika stilar */
+.cart-total {
+	margin-top: 20px;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+	text-align: right;
+	font-size: 1.1rem;
 }
 
-.title:hover {
-	color: rgb(227, 227, 2);
-	text-shadow: 4px 5px 3px rgb(85, 83, 83);
+/* --- MOBILANPASSNING (Media Queries) --- */
+@media (max-width: 768px) {
+	header {
+		padding: 1rem;
+	}
+
+	/* Visa hamburgaren */
+	#menu-btn {
+		display: block;
+	}
+
+	/* Hamburgare menys innehåll */
+	#category-nav {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		background-color: #d7e5f3;
+		border-radius: 1rem;
+		flex-direction: column;
+		padding: 10px 0;
+		z-index: 99;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	/* När JS lägger till klassen 'open' visas menyn */
+	#category-nav.open {
+		display: flex;
+	}
+
+	.nav-btn {
+		width: 100%;
+		text-align: left;
+		padding: 15px 25px;
+		border-radius: 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		margin: 0;
+	}
 }
 
-.link-title {
-	text-decoration: none;
-}
-/* END */
+/* Större skärmar: Se till att navbar visas och hamburgaren döljs */
+@media (min-width: 769px) {
+	#menu-btn {
+		display: none;
+	}
 
-/* Stilar för dropdown-menyn */
-.dropdown-menu {
-	/* Positionering: Visas relativt till sin normala position */
-	position: absolute;
-	/* Döljer menyn initialt */
-	display: none;
-	/* Placering: Flyttar menyn under knappen */
-	top: 102px; /* Justera detta värde för att placera menyn korrekt under knappen */
-	right: 0;
-
-	/* Utseende */
-	background-color: #f9f9f9;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 10; /* Se till att menyn visas över annat innehåll */
-	border-radius: 4px;
+	#category-nav {
+		display: flex;
+		position: static;
+		flex-direction: row;
+		padding: 0;
+		box-shadow: none;
+		border: none;
+	}
 }
 
-/* Stilar för länkarna inuti menyn */
-.Drop-Product {
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
-}
-
-/* Hover-effekt på länkarna */
-.Drop-Product:hover {
-	background-color: #d9d9d9; /* Använder din angivna grå färg */
-}
-
-/* Klass som läggs till med JavaScript för att visa menyn */
-.show {
-	display: block;
-}
-
-/* END */
-
-/* Footer */
-
+/* --- 4. FOOTER --- */
 footer {
 	background-color: rgb(169, 205, 237);
-	display: flex;
-	height: 200px;
-	
+	color: #b0c4de;
+	text-align: center;
+	padding: 30px;
+	margin-top: auto;
+	border-top: 4px solid rgb(0, 0, 0);
 }
 
 footer p {
-	padding-left: 10px;
+	color: #000000;
 }
 
-ul {
-	position: absolute;
-	top: 90%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	margin: 0;
+/* Footer ikon-lista */
+footer ul {
+	margin: 10px 0;
 	padding: 0;
+	font-size: 30px;
 	display: flex;
+	gap: 15px;
+	justify-content: center;
 }
-ul li {
+footer ul li {
 	list-style: none;
 }
-ul li a {
-	display: block;
-	position: relative;
-	width: 50px;
-	height: 100px;
-	line-height: 100px;
-	font-size: 40px;
-	text-align: center;
-	text-decoration: none;
-	color: #404040;
-	margin: 0 30px;
-	transition: 0.5s;
-}
-ul li a span {
-	position: absolute;
-	transition: transform 0.5s;
-}
-ul li a span:nth-child(1),
-ul li a span:nth-child(3) {
-	width: 100%;
-	height: 3px;
-	background: #404040;
-}
-ul li a span:nth-child(1) {
-	top: 0;
-	left: 0;
-	transform-origin: right;
-}
-ul li a:hover span:nth-child(1) {
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform 0.5s;
+
+footer ul li a {
+	color: #000000;
 }
 
-ul li a span:nth-child(3) {
-	bottom: 0;
-	left: 0;
-	transform-origin: left;
+footer ul li a:hover {
+	color: white;
 }
-ul li a:hover span:nth-child(3) {
-	transform: scaleX(0);
-	transform-origin: right;
-	transition: transform 0.5s;
-}
-
-ul li a span:nth-child(2),
-ul li a span:nth-child(4) {
-	width: 3px;
-	height: 100%;
-	background: #404040;
-}
-ul li a span:nth-child(2) {
-	top: 0;
-	left: 0;
-	transform: scale(0);
-	transform-origin: bottom;
-}
-ul li a:hover span:nth-child(2) {
-	transform: scale(1);
-	transform-origin: top;
-	transition: transform 0.5s;
-}
-ul li a span:nth-child(4) {
-	top: 0;
-	right: 0;
-	transform: scale(0);
-	transform-origin: top;
-}
-ul li a:hover span:nth-child(4) {
-	transform: scale(1);
-	transform-origin: bottom;
-	transition: transform 0.5s;
-}
-
-.facebook:hover {
-	color: #3b5998;
-}
-.facebook:hover span {
-	background: #3b5998;
-}
-.twitter:hover {
-	color: #1da1f2;
-}
-.twitter:hover span {
-	background: #1da1f2;
-}
-.instagram:hover {
-	color: #c32aa3;
-}
-.instagram:hover span {
-	background: #c32aa3;
-}
-.google:hover {
-	color: #dd4b39;
-}
-.google:hover span {
-	background: #dd4b39;
-}
-ul li a .twitter {
-	color: #1da1f2;
-}
-ul li a:hover:nth-child(3) {
-	color: #c32aa3;
-}
-ul li a:hover:nth-child(4) {
-	color: #dd4b39;
-}
-
-
-
-
-/* END */
