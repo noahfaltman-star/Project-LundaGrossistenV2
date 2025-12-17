@@ -1,287 +1,415 @@
-/* --- GRUNDINSTÄLLNINGAR --- */
+/* =========================================
+   1. GRUNDINSTÄLLNINGAR & LAYOUT
+   ========================================= */
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Lite modernare font */
 }
 
 body {
-	background-color: #f0f4f8;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
+  background-color: #f4f7fa; /* Något mjukare bakgrund */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-	flex-grow: 1;
-	flex-shrink: 1;
-	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 40px 20px;
+  flex: 1 0 auto; /* Gör att main växer och trycker ner footern */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-/* --- 2. HEADER & NAVIGATION (BLÅTT TEMA) --- */
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
 header {
-	background-color: rgb(169, 205, 237);
-	padding: 1rem 2rem;
-	display: flex;
-	flex-direction: column;
-	box-shadow: 0 4px 12px rgba(0, 40, 100, 0.2);
-	border-bottom: 3px solid rgb(0, 0, 0);
+  background-color: rgb(169, 205, 237);
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 3px solid #000;
 }
 
 .logo {
-	color: #ff9900;
-	text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
-	font-size: 1.6rem;
-	font-weight: 800;
-	letter-spacing: 0.5px;
-	align-self: center;
+  font-family: "Poppins", sans-serif; /* Se till att du lagt in länken i HTML */
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f2a4a;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+
+  /* Dessa rader centrerar loggan */
+  display: flex;
+  justify-content: center; /* Centrerar innehållet i loggan */
+  align-self: center; /* Centrerar själva loggan i headern */
+
+  margin-bottom: 15px; /* Lite luft ner till menyn */
+  text-shadow: none;
+  text-decoration: none; /* Om det skulle vara en länk */
+}
+
+.logo span {
+  color: #ff9900;
+  margin-left: 2px;
 }
 
 #header-interaction {
-	align-items: center;
-	justify-content: space-between;
-	display: flex;
-	position: sticky;
-	top: 0;
-	z-index: 100;
+  align-items: center;
+  justify-content: center; /* Centrerar innehållet */
+  display: flex;
+  position: relative;
+  z-index: 100;
+  height: 60px; /* Sätter en fast höjd så det inte hoppar */
 }
 
 /* Meny-knappar (Navigering) */
 .nav-btn {
-	background: none;
-	border: none;
-	color: #000000;
-	font-size: 1rem;
-	margin: 0 5px;
-	cursor: pointer;
-	padding: 8px 15px;
-	transition: all 0.3s ease;
-	border-radius: 20px;
-	text-decoration: none;
-	display: inline-block;
+  text-decoration: none;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 5px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
 }
 
 .nav-btn:hover {
-	background-color: rgba(255, 255, 255, 0.1);
-	color: white;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .nav-btn.active {
-	font-weight: bold;
+  background-color: #fff;
+  color: #2874f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Hamburgare-knappen (Dold på datorer, visas på mobil) */
+/* Hamburgare (Mobil) */
 #menu-btn {
-	display: none; /* Dold som standard */
-	background: none;
-	border: none;
-	color: rgb(0, 0, 0);
-	font-size: 1.5rem;
-	cursor: pointer;
-	margin-right: 15px;
+  display: none;
+  background: none;
+  border: none;
+  color: #000;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 /* Varukorgs-ikonen */
 .cart-icon-container {
-	position: relative;
-	cursor: pointer;
-	font-size: 1.4rem;
-	margin-left: 20px;
-	padding: 10px;
-	border-radius: 50%;
-	transition: background-color 0.2s;
+  position: absolute; /* Låser fast den */
+  right: 0; /* Längst till höger */
+  cursor: pointer;
+  font-size: 1.4rem;
+  padding: 8px;
+  transition: transform 0.2s;
 }
 
 .cart-icon-container:hover {
-	background-color: white;
+  transform: scale(1.1);
 }
 
-/* Den lilla röda/orangea siffran till kundvagen */
 #cart-counter {
-	position: absolute;
-	top: -2px;
-	right: -2px;
-	background-color: #ff9900;
-	color: #0f2a4a;
-	font-size: 0.75rem;
-	font-weight: bold;
-	border-radius: 50%;
-	padding: 2px 6px;
-	min-width: 18px;
-	text-align: center;
+  position: absolute;
+  top: 0;
+  right: -5px;
+  background-color: #ff9900;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* --- MODAL (POP-UPS) till kundvagnen--- */
+/* =========================================
+   3. PRODUKT-GRID & NY KORT-DESIGN
+   ========================================= */
+
+.product-grid {
+  display: grid;
+  /* Grid som anpassar sig. Korten blir minst 220px breda */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+/* KORTET */
+.product-card {
+  background-color: #ffffff;
+  border-radius: 16px; /* Mjukare hörn */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Mjuk skugga istället för border */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.product-card:hover {
+  transform: translateY(-8px); /* Lyfter kortet mer vid hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* BILD */
+.card-image-container {
+  height: 180px;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ser till att hela bilden syns utan att zoomas/klippas */
+  padding: 15px;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .card-image-container img {
+  transform: scale(1.08); /* Mjuk zoom */
+}
+
+/* INNEHÅLL (Titel + Footer) */
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between; /* Trycker isär titel och footer */
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f2a4a; /* Mörkblå text */
+  margin-bottom: 15px;
+}
+
+/* FOOTER I KORTET (Pris & Knapp) */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0; /* Tunn linje ovanför priset */
+}
+
+.card-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #2874f0; /* Lundagrossistens blå */
+}
+
+.add-btn {
+  background-color: #ff9900; /* Lundagrossistens orange */
+  color: #0f2a4a;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
+}
+
+.add-btn:hover {
+  background-color: #ffad33;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255, 153, 0, 0.4);
+}
+
+/* =========================================
+   4. MODAL (VARUKORG)
+   ========================================= */
 .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(227, 227, 228, 0.85);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1000;
-	backdrop-filter: blur(4px);
-}
-/* Titlen till kundvagnen */
-.modal-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 15px;
-}
-/* Total summan till kundvagnen */
-.cart-total {
-	margin-top: 20px;
-	border-top: 1px solid #ccc;
-	padding-top: 10px;
-	text-align: right;
-}
-/* Köp knappen till kundvagnen */
-.buy-btn {
-	width: 100%;
-	height: 50px;
-	margin-top: 15px;
-	background-color: #2874f0;
-	border-radius: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 42, 74, 0.6); /* Mörkblå transparent bakgrund */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
 }
 
-/* Denna klass togglas av JS för att visa/dölja */
 .hidden {
-	display: none !important;
+  display: none !important;
 }
 
 .modal-content {
-	background-color: white;
-	padding: 40px;
-	border-radius: 16px;
-	width: 90%;
-	max-width: 500px;
-	position: relative;
-	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-	animation: zoomIn 0.3s ease;
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.modal-header h2 {
+  color: #0f2a4a;
 }
 
 .close-btn {
-	position: absolute;
-	top: 15px;
-	right: 20px;
-	font-size: 2rem;
-	background: none;
-	border: none;
-	cursor: pointer;
-	color: #999;
-	transition: color 0.2s;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  line-height: 1;
 }
-
 .close-btn:hover {
-	color: #2874f0;
+  color: #ff9900;
 }
 
-/* Varukorgsmodal specifika stilar */
+#cart-items {
+  overflow-y: auto;
+  flex-grow: 1;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+
 .cart-total {
-	margin-top: 20px;
-	border-top: 1px solid #ccc;
-	padding-top: 10px;
-	text-align: right;
-	font-size: 1.1rem;
+  border-top: 2px solid #eee;
+  padding-top: 15px;
+  text-align: right;
+  font-size: 1.3rem;
+  color: #0f2a4a;
+  margin-bottom: 20px;
 }
 
-/* --- MOBILANPASSNING (Media Queries) --- */
-@media (max-width: 768px) {
-	header {
-		padding: 1rem;
-	}
-
-	/* Visa hamburgaren */
-	#menu-btn {
-		display: block;
-	}
-
-	/* Hamburgare menys innehåll */
-	#category-nav {
-		display: none;
-		position: absolute;
-		top: 100%;
-		left: 0;
-		width: 100%;
-		background-color: #d7e5f3;
-		border-radius: 1rem;
-		flex-direction: column;
-		padding: 10px 0;
-		z-index: 99;
-		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-		border-top: 1px solid rgba(255, 255, 255, 0.1);
-	}
-
-	/* När JS lägger till klassen 'open' visas menyn */
-	#category-nav.open {
-		display: flex;
-	}
-
-	.nav-btn {
-		width: 100%;
-		text-align: left;
-		padding: 15px 25px;
-		border-radius: 0;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-		margin: 0;
-	}
+.buy-btn {
+  width: 100%;
+  height: 55px;
+  background-color: #2874f0;
+  color: white;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 10px rgba(40, 116, 240, 0.3);
+}
+.buy-btn:hover {
+  background-color: #1c5ec9;
 }
 
-/* Större skärmar: Se till att navbar visas och hamburgaren döljs */
-@media (min-width: 769px) {
-	#menu-btn {
-		display: none;
-	}
-
-	#category-nav {
-		display: flex;
-		position: static;
-		flex-direction: row;
-		padding: 0;
-		box-shadow: none;
-		border: none;
-	}
-}
-
-/* --- 4. FOOTER --- */
+/* =========================================
+   5. FOOTER (FIXAD)
+   ========================================= */
 footer {
-	background-color: rgb(169, 205, 237);
-	color: #b0c4de;
-	text-align: center;
-	padding: 30px;
-	margin-top: auto;
-	border-top: 4px solid rgb(0, 0, 0);
+  flex-shrink: 0; /* Förhindrar att footern krymper */
+  background-color: rgb(169, 205, 237);
+  color: #000;
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 4px solid #000;
 }
 
-footer p {
-	color: #000000;
+footer ul.social-icons {
+  margin: 0 0 20px 0;
+  padding: 0;
+  font-size: 24px;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
 }
 
-/* Footer ikon-lista */
-footer ul {
-	margin: 10px 0;
-	padding: 0;
-	font-size: 30px;
-	display: flex;
-	gap: 15px;
-	justify-content: center;
-}
-footer ul li {
-	list-style: none;
+footer ul.social-icons li {
+  list-style: none;
 }
 
-footer ul li a {
-	color: #000000;
+footer ul.social-icons li a {
+  color: #0f2a4a;
+  transition: transform 0.2s;
+  display: inline-block;
 }
 
-footer ul li a:hover {
-	color: white;
+footer ul.social-icons li a:hover {
+  color: #ff9900;
+  transform: scale(1.2);
+}
+
+/* =========================================
+   6. MOBILANPASSNING
+   ========================================= */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  /* Visa hamburgaren och lås den till VÄNSTER */
+  #menu-btn {
+    display: block;
+    position: absolute;
+    left: 0;
+  }
+
+  #category-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #d7e5f3;
+    flex-direction: column;
+    padding: 10px 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  #category-nav.open {
+    display: flex;
+  }
+
+  .nav-btn {
+    width: 100%;
+    text-align: left;
+    padding: 15px 25px;
+    border-radius: 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+@media (min-width: 769px) {
+  #menu-btn {
+    display: none;
+  }
+  #category-nav {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    box-shadow: none;
+    border: none;
+    background: none;
+  }
 }
