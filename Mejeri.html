@@ -14,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="style.css" />
 	</head>
-	<body>
+	<body data-category="mejeri">
 		<header>
 			<div class="logo">Lunda<span>grossisten</span></div>
 			<div id="header-interaction">
@@ -139,7 +139,27 @@
 					Gå till kassan
 				</button>
 			</div>
-		</div>
+		</div>      <!-- PRODUKT MODAL -->
+<div id="product-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <button class="modal-close-btn" onclick="closeProductModal()">×</button>
+    
+    <img id="modal-img" />
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+    <strong id="modal-price"></strong>
+
+    <div class="quantity-controls">
+      <button onclick="changeModalQty(-1)">−</button>
+      <span id="modal-qty">0 st</span>
+      <button onclick="changeModalQty(1)">+</button>
+    </div>
+
+    <button class="buy-btn" onclick="addModalToCart()">
+      Lägg i varukorg
+    </button>
+  </div>
+</div>
 
 		<script src="app.js"></script>
 	</body>

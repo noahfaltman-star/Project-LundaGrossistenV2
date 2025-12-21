@@ -1,383 +1,188 @@
-// =========================================================
-// 1. DATABAS (Våra produkter)
-// =========================================================
+// DATA
+class Product {
+  constructor(id, name, price, category, desc, image) {
+    Object.assign(this, { id, name, price, category, desc, image });
+  }
+  createCard() {
+    const card = document.createElement("article");
+    card.className = "product-card";
+    card.innerHTML = `
+      <div class="card-image-container">
+        <img src="${this.image}" alt="${this.name}">
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">${this.name}</h3>
+        <div class="card-price">${this.price} kr</div>
+        <div class="card-footer">
+          <button class="card-minus-btn" onclick="changeQty(${this.id}, -1)">−</button>
+          <span class="card-qty" id="qty-${this.id}">0 st</span>
+          <button class="card-plus-btn" onclick="changeQty(${this.id}, 1)">+</button>
+          <button class="add-btn" onclick="addToCartFromCard(${this.id})"><i class="fa-solid fa-cart-plus"></i></button>
+        </div>
+      </div>
+    `;
+    card.addEventListener("click", (e) => !e.target.closest('button') && openProductModal(this));
+    return card;
+  }
+}
+
 const products = [
-  // --- MEJERI ---
-  {
-    id: 1,
-    name: "Svensk Standardmjök",
-    price: 15,
-    category: "mejeri",
-    desc: "Färsk standardmjölk från svenska gårdar.",
-    image: "assets/mjolk.jpg",
-  },
-  {
-    id: 2,
-    name: "Herrgårdsost",
-    price: 89,
-    category: "mejeri",
-    desc: "Mild och gräddig ost, lagrad 12 mån.",
-    image: "assets/ost.jpg",
-  },
-  {
-    id: 7,
-    name: "Vispgrädde",
-    price: 22,
-    category: "mejeri",
-    desc: "Perfekt till tårtan, 40% fetthalt.",
-    image: "assets/vispgradde.png",
-  },
-  {
-    id: 8,
-    name: "Grekisk Yoghurt",
-    price: 35,
-    category: "mejeri",
-    desc: "Krämig yoghurt med 10% fett.",
-    image: "assets/yoghurt.png",
-  },
-  {
-    id: 9,
-    name: "Smör Normalsaltat",
-    price: 55,
-    category: "mejeri",
-    desc: "Svenskt smör, 500g.",
-    image: "assets/smor.jpg",
-  },
-  {
-    id: 10,
-    name: "Filmjölk",
-    price: 18,
-    category: "mejeri",
-    desc: "Klassisk svensk filmjölk.",
-    image: "assets/filmjolk.avif",
-  },
-
-  // --- KÖTT ---
-  {
-    id: 3,
-    name: "Oxfilé Premium",
-    price: 299,
-    category: "kott",
-    desc: "Mörad oxfilé av högsta kvalitet.",
-    image: "assets/oxfile.jpg",
-  },
-  {
-    id: 4,
-    name: "Chorizo",
-    price: 45,
-    category: "kott",
-    desc: "Kryddig korv med hög kötthalt.",
-    image: "assets/chorizo.jpg",
-  },
-  {
-    id: 11,
-    name: "Blandfärs",
-    price: 89,
-    category: "kott",
-    desc: "Svensk blandfärs 50/50, 1kg.",
-    image: "assets/fars.avif",
-  },
-  {
-    id: 12,
-    name: "Kycklingfilé",
-    price: 120,
-    category: "kott",
-    desc: "Fryst kycklingfilé, 1kg.",
-    image: "assets/kyckling.avif",
-  },
-  {
-    id: 13,
-    name: "Entrecôte",
-    price: 249,
-    category: "kott",
-    desc: "Välmarmorerad bit kött.",
-    image: "assets/entrecote.jpg",
-  },
-  {
-    id: 14,
-    name: "Bacon",
-    price: 15,
-    category: "kott",
-    desc: "Rökt sidfläsk i skivor.",
-    image: "assets/bacon.avif",
-  },
-
-  // --- FRUKT ---
-  {
-    id: 5,
-    name: "Eko Bananer",
-    price: 25,
-    category: "frukt",
-    desc: "Rättvisemärkta bananer i klase.",
-    image: "assets/bananer.jpg",
-  },
-  {
-    id: 15,
-    name: "Äpplen Royal Gala",
-    price: 29,
-    category: "frukt",
-    desc: "Söta och krispiga äpplen, 1kg.",
-    image: "assets/apple.webp",
-  },
-  {
-    id: 16,
-    name: "Apelsiner",
-    price: 32,
-    category: "frukt",
-    desc: "Saftiga apelsiner för juice.",
-    image: "assets/apelsin.webp",
-  },
-  {
-    id: 17,
-    name: "Vindruvor",
-    price: 40,
-    category: "frukt",
-    desc: "Kärnfria gröna vindruvor.",
-    image: "assets/druvor.jpg",
-  },
-  {
-    id: 18,
-    name: "Päron Conference",
-    price: 35,
-    category: "frukt",
-    desc: "Mjuka och söta päron.",
-    image: "assets/paron.jpg",
-  },
-  {
-    id: 19,
-    name: "Citroner",
-    price: 15,
-    category: "frukt",
-    desc: "Syrliga citroner i nät, 500g.",
-    image: "assets/citron.webp",
-  },
-
-  // --- GRÖNT ---
-  {
-    id: 6,
-    name: "Avocado",
-    price: 15,
-    category: "gront",
-    desc: "Mogen ätklar avocado, 2-pack.",
-    image: "assets/avocado.jpg",
-  },
-  {
-    id: 20,
-    name: "Gurka",
-    price: 12,
-    category: "gront",
-    desc: "Svensk odlad gurka.",
-    image: "assets/gurka.webp",
-  },
-  {
-    id: 21,
-    name: "Tomater",
-    price: 35,
-    category: "gront",
-    desc: "Kvisttomater, rika på smak.",
-    image: "assets/tomat.jpg",
-  },
-  {
-    id: 22,
-    name: "Isbergssallad",
-    price: 20,
-    category: "gront",
-    desc: "Krispigt salladshuvud.",
-    image: "assets/sallad.jpg",
-  },
-  {
-    id: 23,
-    name: "Morötter",
-    price: 15,
-    category: "gront",
-    desc: "Eko morötter i påse, 1kg.",
-    image: "assets/morot.jpg",
-  },
-  {
-    id: 24,
-    name: "Paprika Röd",
-    price: 10,
-    category: "gront",
-    desc: "Söt röd paprika, styckpris.",
-    image: "assets/paprika.webp",
-  },
+  new Product(1, "Mjölk 1L", 15, "mejeri", "Färsk svensk mjölk.", "assets/mjolk.jpg"),
+  new Product(2, "Smör", 55, "mejeri", "Normalsaltat smör.", "assets/smor.jpg"),
+  new Product(3, "Oxfilé", 299, "kott", "Mör oxfilé.", "assets/oxfile.jpg"),
+  new Product(4, "Kycklingfilé", 120, "kott", "Fryst kyckling.", "assets/kyckling.avif"),
+  new Product(5, "Bananer", 25, "frukt", "Ekologiska bananer.", "assets/bananer.jpg"),
+  new Product(6, "Äpplen", 29, "frukt", "Svenska äpplen.", "assets/apple.webp"),
+  new Product(7, "Avocado", 15, "gront", "Mogen avocado.", "assets/avocado.jpg"),
+  new Product(8, "Gurka", 12, "gront", "Svensk gurka.", "assets/gurka.webp"),
 ];
 
-const CATEGORY_MAPPING = {
-  home: "all",
-  mejeri: "mejeri",
-  kott: "kott",
-  frukt: "frukt",
-  gront: "gront",
-};
-
-// =========================================================
-// 2. STATE & UI REFERENSER
-// =========================================================
 let cart = [];
-const productContainer = document.getElementById("product-container");
-const cartCounter = document.getElementById("cart-counter");
-const cartItemsContainer = document.getElementById("cart-items");
-const totalPriceEl = document.getElementById("total-price");
-const cartModal = document.getElementById("cart-modal");
+let productQtys = {};
+let currentProduct = null;
+let modalQty = 0;
 
-// =========================================================
-// 3. LOGIK
-// =========================================================
+// INIT
+const init = () => {
+  products.forEach(p => productQtys[p.id] = 0);
+  loadProducts();
+};
 
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.add("hidden");
-}
-function toggleMenu() {
-  const nav = document.getElementById("category-nav");
-  nav.classList.toggle("open");
-}
+// KVANTITET
+const changeQty = (id, amount) => {
+  productQtys[id] = Math.max(0, productQtys[id] + amount);
+  document.getElementById(`qty-${id}`).textContent = `${productQtys[id]} st`;
+};
 
-function addToCart(productId, event) {
-  if (event) event.stopPropagation();
-  const productToAdd = products.find((p) => p.id === productId);
-  const existingItem = cart.find((item) => item.id === productId);
-
-  // Feedback animation på knappen
-  const btn = event.target;
-  const originalText = btn.innerText;
-  btn.style.backgroundColor = "#4CAF50"; // Grön för bekräftelse
-  btn.innerText = "✓";
-  setTimeout(() => {
-    btn.innerText = originalText;
-    btn.style.backgroundColor = ""; // Återställ färg (hanteras av CSS)
-  }, 1000);
-
-  if (existingItem) {
-    existingItem.quantity++;
+// VARUKORG
+const addToCartFromCard = (id) => {
+  const qty = productQtys[id];
+  if (qty > 0) {
+    addToCart(id, qty);
+    productQtys[id] = 0;
+    document.getElementById(`qty-${id}`).textContent = "0 st";
   } else {
-    cart.push({ ...productToAdd, quantity: 1 });
-  }
-  updateCartUI();
-  renderCartList();
-}
-
-function removeFromCart(productId) {
-  cart = cart.filter((item) => item.id !== productId);
-  renderCartList();
-  updateCartUI();
-}
-
-function updateCartUI() {
-  let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  if (cartCounter) cartCounter.innerText = totalItems;
-}
-
-function renderCartList() {
-  cartItemsContainer.innerHTML = "";
-  let totalCost = 0;
-
-  if (cart.length === 0) {
-    cartItemsContainer.innerHTML = "<p>Varukorgen är tom.</p>";
-  } else {
-    cart.forEach((item) => {
-      const itemTotal = item.price * item.quantity;
-      totalCost += itemTotal;
-
-      const row = document.createElement("div");
-      row.style.borderBottom = "1px solid #eee";
-      row.style.padding = "10px 0";
-      row.style.display = "flex";
-      row.style.justifyContent = "space-between";
-      row.style.alignItems = "center";
-
-      row.innerHTML = `
-                <div>
-                    <strong>${item.name}</strong><br>
-                    ${item.quantity} st x ${item.price} kr
-                </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <span>${itemTotal.toFixed(2)} kr</span>
-                    <button onclick="removeFromCart(${
-                      item.id
-                    })" class="buy-btn" style="background:#ff4444; padding:5px 10px; width:auto; font-size:0.8rem; margin:0; height:auto;">Ta bort</button>
-                </div>
-            `;
-      cartItemsContainer.appendChild(row);
-    });
-  }
-  totalPriceEl.innerText = totalCost.toFixed(2);
-}
-
-function openCartModal() {
-  renderCartList();
-  if (cartModal) cartModal.classList.remove("hidden");
-}
-
-// =========================================================
-// 4. RENDERING (NYA KORT UTAN BESKRIVNING)
-// =========================================================
-
-function renderProducts(productList) {
-  if (!productContainer) return;
-
-  productContainer.innerHTML = "";
-
-  productList.forEach((product) => {
-    const card = document.createElement("article");
-    card.classList.add("product-card");
-
-    // HÄR ÄR ÄNDRINGEN: Ingen beskrivning renderas
-    card.innerHTML = `
-            <div class="card-image-container">
-                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://placehold.co/200x150?text=Ingen+Bild'">
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">${product.name}</h3>
-                <div class="card-footer">
-                    <span class="card-price">${product.price}:-</span>
-                    <button class="add-btn" onclick="addToCart(${product.id}, event)">
-                        Köp
-                    </button>
-                </div>
-            </div>
-        `;
-    productContainer.appendChild(card);
-  });
-}
-
-function loadPageProducts() {
-  const path = window.location.pathname.split("/").pop();
-  let categoryKey = "home";
-
-  if (path !== "home.html" && path !== "") {
-    categoryKey = path.split(".")[0];
-  }
-  categoryKey = categoryKey.toLowerCase();
-
-  const categoryToFilter = CATEGORY_MAPPING[categoryKey] || "all";
-  let productsToRender = products;
-
-  if (categoryToFilter !== "all") {
-    productsToRender = products.filter((p) => p.category === categoryToFilter);
-  }
-  renderProducts(productsToRender);
-}
-
-// =========================================================
-// 5. STARTUP
-// =========================================================
-
-function loadInitialCart() {
-  // Starta med tom vagn
-}
-
-window.onclick = function (event) {
-  if (
-    event.target.classList &&
-    event.target.classList.contains("modal-overlay")
-  ) {
-    event.target.classList.add("hidden");
+    showNotification("Välj antal först!", "error");
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadInitialCart();
-  loadPageProducts();
-  updateCartUI();
-});
+const addToCart = (id, qty = 1) => {
+  const product = products.find(p => p.id === id);
+  const item = cart.find(i => i.id === id);
+  item ? item.qty += qty : cart.push({ ...product, qty });
+  updateCartCounter();
+  showNotification(`${product.name} tillagd!`);
+};
+
+const removeFromCart = (id) => {
+  const product = cart.find(item => item.id === id);
+  cart = cart.filter(item => item.id !== id);
+  updateCartCounter();
+  renderCart();
+  showNotification(`${product.name} borttagen!`);
+};
+
+const updateCartCounter = () => {
+  document.getElementById("cart-counter").textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+};
+
+// MODALS
+const openCartModal = () => {
+  renderCart();
+  document.getElementById("cart-modal").classList.remove("hidden");
+};
+
+const closeModal = (id) => {
+  document.getElementById(id).classList.add("hidden");
+};
+
+const renderCart = () => {
+  const container = document.getElementById("cart-items");
+  const totalPrice = document.getElementById("total-price");
+  
+  if (cart.length === 0) {
+    container.innerHTML = "<p>Varukorgen är tom.</p>";
+    totalPrice.textContent = "0.00";
+    return;
+  }
+
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <strong>${item.name}</strong><br>
+        <span class="cart-item-details">${item.qty} st × ${item.price} kr = ${(item.price * item.qty).toFixed(2)} kr</span>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>
+  `).join('');
+
+  totalPrice.textContent = cart.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2);
+};
+
+const openProductModal = (product) => {
+  currentProduct = product;
+  modalQty = 0;
+  
+  const modalImg = document.getElementById("modal-img");
+  modalImg.src = product.image;
+  
+  document.getElementById("modal-title").textContent = product.name;
+  document.getElementById("modal-desc").textContent = product.desc;
+  document.getElementById("modal-price").textContent = product.price + " kr";
+  document.getElementById("modal-qty").textContent = "0 st";
+
+  document.getElementById("product-modal").classList.remove("hidden");
+};
+
+const closeProductModal = () => {
+  document.getElementById("product-modal").classList.add("hidden");
+};
+
+const changeModalQty = (amount) => {
+  modalQty = Math.max(0, modalQty + amount);
+  document.getElementById("modal-qty").textContent = modalQty + " st";
+};
+
+const addModalToCart = () => {
+  if (modalQty > 0) {
+    addToCart(currentProduct.id, modalQty);
+    closeProductModal();
+  }
+};
+
+// NOTIFICATIONS
+const showNotification = (message, type = 'success') => {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.innerHTML = `
+    <div class="notification-content">
+      <i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+      <span>${message}</span>
+    </div>
+    <button class="notification-close" onclick="this.closest('.notification').remove()">
+      <i class="fa-solid fa-times"></i>
+    </button>
+  `;
+  document.body.appendChild(notification);
+  setTimeout(() => notification.classList.add('show'), 10);
+  setTimeout(() => notification.remove(), 3000);
+};
+
+// LOAD PRODUCTS
+const loadProducts = () => {
+  const category = document.body.dataset.category || "all";
+  const container = document.getElementById("product-container");
+  const list = category === "all" ? products : products.filter(p => p.category === category);
+  
+  container.innerHTML = "";
+  list.forEach(p => container.appendChild(p.createCard()));
+};
+
+const toggleMenu = () => {
+  document.getElementById("category-nav").classList.toggle("open");
+};
+
+// START
+document.addEventListener("DOMContentLoaded", init);
