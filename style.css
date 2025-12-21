@@ -1,31 +1,26 @@
-/* =========================================
-   1. GRUNDINSTÄLLNINGAR & LAYOUT
-   ========================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Lite modernare font */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background-color: #f4f7fa; /* Något mjukare bakgrund */
+  background-color: #f4f7fa;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 main {
-  flex: 1 0 auto; /* Gör att main växer och trycker ner footern */
+  flex: 1 0 auto;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* =========================================
-   2. HEADER & NAVIGATION
-   ========================================= */
 header {
   background-color: rgb(169, 205, 237);
   padding: 1rem 2rem;
@@ -36,21 +31,16 @@ header {
 }
 
 .logo {
-  font-family: "Poppins", sans-serif; /* Se till att du lagt in länken i HTML */
+  font-family: "Poppins", sans-serif;
   font-size: 2.2rem;
   font-weight: 800;
   color: #0f2a4a;
   text-transform: uppercase;
   letter-spacing: -1px;
-
-  /* Dessa rader centrerar loggan */
   display: flex;
-  justify-content: center; /* Centrerar innehållet i loggan */
-  align-self: center; /* Centrerar själva loggan i headern */
-
-  margin-bottom: 15px; /* Lite luft ner till menyn */
-  text-shadow: none;
-  text-decoration: none; /* Om det skulle vara en länk */
+  justify-content: center;
+  align-self: center;
+  margin-bottom: 15px;
 }
 
 .logo span {
@@ -60,14 +50,13 @@ header {
 
 #header-interaction {
   align-items: center;
-  justify-content: center; /* Centrerar innehållet */
+  justify-content: center;
   display: flex;
   position: relative;
   z-index: 100;
-  height: 60px; /* Sätter en fast höjd så det inte hoppar */
+  height: 60px;
 }
 
-/* Meny-knappar (Navigering) */
 .nav-btn {
   text-decoration: none;
   color: #000;
@@ -86,11 +75,10 @@ header {
 
 .nav-btn.active {
   background-color: #fff;
-  color: #2874f0;
+  color: #270dd2;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Hamburgare (Mobil) */
 #menu-btn {
   display: none;
   background: none;
@@ -100,10 +88,9 @@ header {
   cursor: pointer;
 }
 
-/* Varukorgs-ikonen */
 .cart-icon-container {
-  position: absolute; /* Låser fast den */
-  right: 0; /* Längst till höger */
+  position: absolute;
+  right: 0;
   cursor: pointer;
   font-size: 1.4rem;
   padding: 8px;
@@ -130,36 +117,36 @@ header {
 }
 
 /* =========================================
-   3. PRODUKT-GRID & NY KORT-DESIGN
+   PRODUKT-GRID
    ========================================= */
-
 .product-grid {
   display: grid;
-  /* Grid som anpassar sig. Korten blir minst 220px breda */
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 25px;
   padding-bottom: 20px;
 }
 
-/* KORTET */
+/* =========================================
+   PRODUKTKORT
+   ========================================= */
 .product-card {
   background-color: #ffffff;
-  border-radius: 16px; /* Mjukare hörn */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Mjuk skugga istället för border */
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.02);
+  position: relative;
 }
 
 .product-card:hover {
-  transform: translateY(-8px); /* Lyfter kortet mer vid hover */
+  transform: translateY(-8px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
-/* BILD */
 .card-image-container {
   height: 180px;
   width: 100%;
@@ -171,58 +158,119 @@ header {
 .card-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ser till att hela bilden syns utan att zoomas/klippas */
+  object-fit: contain;
   padding: 15px;
   transition: transform 0.5s ease;
 }
 
 .product-card:hover .card-image-container img {
-  transform: scale(1.08); /* Mjuk zoom */
+  transform: scale(1.08);
 }
 
-/* INNEHÅLL (Titel + Footer) */
 .card-content {
   padding: 20px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  justify-content: space-between; /* Trycker isär titel och footer */
+  justify-content: space-between;
 }
 
 .card-title {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #0f2a4a; /* Mörkblå text */
-  margin-bottom: 15px;
-}
-
-/* FOOTER I KORTET (Pris & Knapp) */
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  padding-top: 15px;
-  border-top: 1px solid #f0f0f0; /* Tunn linje ovanför priset */
+  color: #0f2a4a;
+  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .card-price {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #2874f0; /* Lundagrossistens blå */
+  color: #2874f0;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* TA BORT: ::before pseudo-element för punkten */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.card-minus-btn {
+  background-color: #ce6666;
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.card-minus-btn:hover {
+  background-color: #ff5252;
+  transform: scale(1.05);
+}
+
+.card-qty {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  min-width: 40px;
+  text-align: center;
+}
+
+.card-plus-btn {
+  background-color: #4ecdc4;
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.card-plus-btn:hover {
+  background-color: #45b7b8;
+  transform: scale(1.05);
 }
 
 .add-btn {
-  background-color: #ff9900; /* Lundagrossistens orange */
-  color: #0f2a4a;
+  background-color: #ff9900;
+  color: #0f2a4b;
   border: none;
-  padding: 8px 18px;
+  padding: 8px 15px;
   border-radius: 20px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .add-btn:hover {
@@ -232,7 +280,7 @@ header {
 }
 
 /* =========================================
-   4. MODAL (VARUKORG)
+   MODALS
    ========================================= */
 .modal-overlay {
   position: fixed;
@@ -240,7 +288,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(15, 42, 74, 0.6); /* Mörkblå transparent bakgrund */
+  background-color: rgba(15, 42, 74, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -262,8 +310,12 @@ header {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
+  position: relative;
 }
 
+/* =========================================
+   VARUKORGS-MODAL (med finare stängningsknapp)
+   ========================================= */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -271,22 +323,46 @@ header {
   border-bottom: 1px solid #eee;
   padding-bottom: 15px;
   margin-bottom: 15px;
+  padding-right: 60px;
 }
 
 .modal-header h2 {
   color: #0f2a4a;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
+/* FINARE STÄNGNINGSKNAPP FÖR VARUKORGEN */
 .close-btn {
-  font-size: 1.8rem;
-  background: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: white;
   border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   cursor: pointer;
-  color: #aaa;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 1.3rem;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  z-index: 10;
 }
+
 .close-btn:hover {
-  color: #ff9900;
+  background: linear-gradient(135deg, #ff5252, #ff4444);
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.4);
+}
+
+.close-btn:active {
+  transform: scale(1.05);
+  box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
 }
 
 #cart-items {
@@ -318,15 +394,238 @@ header {
   transition: background-color 0.2s;
   box-shadow: 0 4px 10px rgba(40, 116, 240, 0.3);
 }
+
 .buy-btn:hover {
   background-color: #1c5ec9;
 }
 
 /* =========================================
-   5. FOOTER (FIXAD)
+   VARUKORGS-ITEMS (med finare X-knapp)
+   ========================================= */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.cart-item:hover {
+  background-color: #f8f9fa;
+}
+
+.cart-item-info {
+  flex: 1;
+  padding-right: 15px;
+}
+
+.cart-item-details {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* FINARE X-KNAPP I VARUKORGEN */
+.remove-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: white;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+  margin-left: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.remove-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.remove-btn:hover::before {
+  left: 100%;
+}
+
+.remove-btn:hover {
+  background: linear-gradient(135deg, #ff5252, #ff4444);
+  transform: scale(1.15) rotate(90deg);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.remove-btn:active {
+  transform: scale(1.05) rotate(90deg);
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.remove-btn i {
+  transition: transform 0.3s ease;
+}
+
+.remove-btn:hover i {
+  transform: scale(1.2);
+}
+
+/* =========================================
+   NOTIFICATIONS
+   ========================================= */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: -400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  z-index: 10000;
+  min-width: 300px;
+  max-width: 400px;
+  transition: right 0.3s ease;
+  border-left: 4px solid #28a745;
+}
+
+.notification.show {
+  right: 20px;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  gap: 12px;
+}
+
+.notification-content i {
+  color: #28a745;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.notification-content span {
+  flex: 1;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.notification-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.notification-error {
+  border-left-color: #dc3545;
+}
+
+.notification-error .notification-content i {
+  color: #dc3545;
+}
+
+/* =========================================
+   PRODUKT MODAL
+   ========================================= */
+#product-modal img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #ff6b6b, #ff5252);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.modal-close-btn:hover {
+  background: linear-gradient(135deg, #ff5252, #ff4444);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.quantity-controls button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.5rem;
+  background-color: #ff9900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.quantity-controls button:hover {
+  background-color: #ffad33;
+  transform: scale(1.05);
+}
+
+.quantity-controls span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  min-width: 50px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* =========================================
+   FOOTER
    ========================================= */
 footer {
-  flex-shrink: 0; /* Förhindrar att footern krymper */
+  flex-shrink: 0;
   background-color: rgb(169, 205, 237);
   color: #000;
   text-align: center;
@@ -359,14 +658,13 @@ footer ul.social-icons li a:hover {
 }
 
 /* =========================================
-   6. MOBILANPASSNING
+   MOBILANPASSNING
    ========================================= */
 @media (max-width: 768px) {
   header {
     padding: 1rem;
   }
 
-  /* Visa hamburgaren och lås den till VÄNSTER */
   #menu-btn {
     display: block;
     position: absolute;
@@ -398,12 +696,76 @@ footer ul.social-icons li a:hover {
     margin: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   }
+
+  .card-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .card-minus-btn,
+  .card-plus-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .card-qty {
+    font-size: 0.8rem;
+    min-width: 35px;
+  }
+
+  .add-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .card-price {
+    font-size: 1.2rem;
+  }
+
+  .modal-close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .close-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+    top: 15px;
+    right: 15px;
+  }
+
+  .quantity-controls {
+    gap: 10px;
+  }
+
+  .quantity-controls button {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .quantity-controls span {
+    font-size: 1rem;
+    min-width: 40px;
+  }
+
+  .remove-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+    margin-left: 8px;
+  }
 }
 
 @media (min-width: 769px) {
   #menu-btn {
     display: none;
   }
+  
   #category-nav {
     display: flex;
     position: static;
