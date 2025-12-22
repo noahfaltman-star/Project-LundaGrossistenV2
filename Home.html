@@ -1,142 +1,149 @@
 <!DOCTYPE html>
 <html lang="sv">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-        />
-        <title>Lundagrossisten - Home</title>
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css" />
-    </head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Lundagrossisten - Home</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="style.css" />
+	</head>
 
+	<body data-category="all">
+		<header>
+			<div class="logo">Lunda<span>grossisten</span></div>
+			<div id="header-interaction">
+				<!-- Navbar till Mobil -->
+				<button
+					id="menu-btn"
+					onclick="toggleMenu()"
+					aria-label="Öppna meny"
+				>
+					<i class="fa-solid fa-bars"></i>
+				</button>
 
-    <body data-category="all">
-        
-        <header>
-            <div class="logo">Lunda<span>grossisten</span></div>
-            <div id="header-interaction">
-                <!-- Navbar till Mobil -->
-                <button
-                    id="menu-btn"
-                    onclick="toggleMenu()"
-                    aria-label="Öppna meny"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+				<!-- Navbar till PC/Surfplatta -->
+				<nav id="category-nav">
+					<a class="nav-btn active" href="Home.html">Alla</a>
+					<a class="nav-btn" href="mejeri.html">Mejeri</a>
+					<a class="nav-btn" href="kott.html">Kött</a>
+					<a class="nav-btn" href="frukt.html">Frukt</a>
+					<a class="nav-btn" href="gront.html">Grönt</a>
+				</nav>
+				<!-- Varukundvagn med en counter för innehåll-->
+				<div class="cart-icon-container" onclick="openCartModal()">
+					<i class="fa-solid fa-cart-shopping"></i>
+					<span id="cart-counter">0</span>
+				</div>
+			</div>
+		</header>
 
-                <!-- Navbar till PC/Surfplatta -->
-                <nav id="category-nav">
-                    <a class="nav-btn active" href="Home.html">Alla</a>
-                    <a class="nav-btn" href="mejeri.html">Mejeri</a>
-                    <a class="nav-btn" href="kott.html">Kött</a>
-                    <a class="nav-btn" href="frukt.html">Frukt</a>
-                    <a class="nav-btn" href="gront.html">Grönt</a>
-                </nav>
-                <!-- Varukundvagn med en counter för innehåll-->
-                <div class="cart-icon-container" onclick="openCartModal()">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-counter">0</span>
-                </div>
-            </div>
-        </header>
+		<main>
+			<div id="product-container" class="product-grid"></div>
+		</main>
 
-        <main>
-            <div id="product-container" class="product-grid"></div>
-        </main>
+		<footer>
+			<!-- Sociala länkar -->
+			<ul class="social-icons">
+				<li>
+					<a class="facebook" href="#"
+						><i
+							class="fa-brands fa-facebook-f"
+							aria-hidden="true"
+						></i
+					></a>
+				</li>
+				<li>
+					<a class="twitter" href="#"
+						><i
+							class="fa-brands fa-twitter"
+							aria-hidden="true"
+						></i
+					></a>
+				</li>
+				<li>
+					<a class="instagram" href="#"
+						><i
+							class="fa-brands fa-square-instagram"
+							aria-hidden="true"
+						></i
+					></a>
+				</li>
+				<li>
+					<a class="google" href="#"
+						><i
+							class="fa-brands fa-google-plus-g"
+							aria-hidden="true"
+						></i
+					></a>
+				</li>
+			</ul>
 
-        <footer>
-            <!-- Sociala länkar -->
-            <ul class="social-icons">
-                <li>
-                    <a class="facebook" href="#"
-                        ><i
-                            class="fa-brands fa-facebook-f"
-                            aria-hidden="true"
-                        ></i
-                    ></a>
-                </li>
-                <li>
-                    <a class="twitter" href="#"
-                        ><i
-                            class="fa-brands fa-twitter"
-                            aria-hidden="true"
-                        ></i
-                    ></a>
-                </li>
-                <li>
-                    <a class="instagram" href="#"
-                        ><i
-                            class="fa-brands fa-square-instagram"
-                            aria-hidden="true"
-                        ></i
-                    ></a>
-                </li>
-                <li>
-                    <a class="google" href="#"
-                        ><i
-                            class="fa-brands fa-google-plus-g"
-                            aria-hidden="true"
-                        ></i
-                    ></a>
-                </li>
-            </ul>
+			<p>&copy;Lundagrossisten AB 2025</p>
+		</footer>
+		<!-- Modal för kundvagnen -->
+		<div id="cart-modal" class="modal-overlay hidden">
+			<div class="modal-content">
+				<!-- Titlen -->
+				<div class="modal-header">
+					<h2>Din Varukorg</h2>
+					<button
+						class="close-btn"
+						onclick="closeModal('cart-modal')"
+					>
+						x
+					</button>
+				</div>
+				<!-- Produkterna med Namn,st,summa-->
+				<div id="cart-items"></div>
 
-            <p>&copy;Lundagrossisten AB 2025</p>
-        </footer>
-        <!-- Modal för kundvagnen -->
-        <div id="cart-modal" class="modal-overlay hidden">
-            <div class="modal-content">
-                <!-- Titlen -->
-                <div class="modal-header">
-                    <h2>Din Varukorg</h2>
-                    <button
-                        class="close-btn"
-                        onclick="closeModal('cart-modal')"
-                    >
-                        x
-                    </button>
-                </div>
-                <!-- Produkterna med Namn,st,summa-->
-                <div id="cart-items"></div>
+				<!-- Summan av produkterna -->
+				<div class="cart-total">
+					<strong
+						>Totalt:
+						<span id="total-price">0.00</span> kr</strong
+					>
+				</div>
 
-                <!-- Summan av produkterna -->
-                <div class="cart-total">
-                    <strong
-                        >Totalt:
-                        <span id="total-price">0.00</span> kr</strong
-                    >
-                </div>
+				<button class="buy-btn">Gå till kassan</button>
+			</div>
+		</div>
+		<!-- PRODUKT MODAL -->
+		<div id="product-modal" class="modal-overlay hidden">
+			<div class="modal-content">
+				<button
+					class="modal-close-btn"
+					onclick="closeProductModal()"
+				>
+					x
+				</button>
 
-                <button class="buy-btn">Gå till kassan</button>
-            </div>
-        </div><!-- PRODUKT MODAL -->
-<div id="product-modal" class="modal-overlay hidden">
-  <div class="modal-content">
-    <button class="modal-close-btn" onclick="closeProductModal()">×</button>
-    
-    <img id="modal-img" />
-    <h2 id="modal-title"></h2>
-    <p id="modal-desc"></p>
-    <strong id="modal-price"></strong>
+				<img id="modal-img" />
+				<h2 id="modal-title"></h2>
+				<p id="modal-desc"></p>
+				<strong id="modal-price"></strong>
 
-    <div class="quantity-controls">
-      <button onclick="changeModalQty(-1)">−</button>
-      <span id="modal-qty">0 st</span>
-      <button onclick="changeModalQty(1)">+</button>
-    </div>
+				<div class="quantity-controls">
+					<button onclick="changeModalQty(-1)">−</button>
+					<span id="modal-qty">0 st</span>
+					<button onclick="changeModalQty(1)">+</button>
+				</div>
 
-    <button class="buy-btn" onclick="addModalToCart()">
-      Lägg i varukorg
-    </button>
-  </div>
-</div>
+				<button class="buy-btn" onclick="addModalToCart()">
+					Lägg i varukorg
+				</button>
+			</div>
+		</div>
 
-        <script src="app.js"></script>
-    </body>
+		<script src="app.js"></script>
+	</body>
 </html>
