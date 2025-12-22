@@ -1,8 +1,18 @@
-// DATA
+//================
+// DATA & MODELLERT
+// ===============
+/**
+ * Klass som representerar en produkt i shoppen
+ * används för att skapa produktobjekt och generera HTML-kort
+ */
 class Product {
   constructor(id, name, price, category, desc, image) {
     Object.assign(this, { id, name, price, category, desc, image });
   }
+  /**
+   * 
+   * Skapar och returnerar ett produktkort (HTML-element)
+   */
   createCard() {
     const card = document.createElement("article");
     card.className = "product-card";
@@ -21,10 +31,12 @@ class Product {
         </div>
       </div>
     `;
+    // klick på kortet(men inte knappar) öppnar produkt-modal
     card.addEventListener("click", (e) => !e.target.closest('button') && openProductModal(this));
     return card;
   }
 }
+// Lista med alla produkter i webbshoppen
 
 const products = [
   new Product(1, "Mjölk 1L", 15, "mejeri", "Färsk svensk mjölk.", "assets/mjolk.jpg"),
@@ -37,24 +49,38 @@ const products = [
   new Product(8, "Gurka", 12, "gront", "Svensk gurka.", "assets/gurka.webp"),
 ];
 
+// Global state
+
 let cart = [];
 let productQtys = {};
 let currentProduct = null;
 let modalQty = 0;
 
-// INIT
+// INITiIERING
+/**
+ * Körs när sidan laddas
+ * Initierar kvantiteter och laddar produkter
+ */
+
 const init = () => {
   products.forEach(p => productQtys[p.id] = 0);
   loadProducts();
 };
 
-// KVANTITET
+// KVANTITETSHANTERING
+
+//* Ökar eller minskar kvantitet på produkrkort
+
 const changeQty = (id, amount) => {
   productQtys[id] = Math.max(0, productQtys[id] + amount);
   document.getElementById(`qty-${id}`).textContent = `${productQtys[id]} st`;
 };
-
+//============
 // VARUKORG
+//=============
+
+//* Lägger vald kvantiet feån produktkort till varukorgen
+
 const addToCartFromCard = (id) => {
   const qty = productQtys[id];
   if (qty > 0) {
@@ -65,15 +91,22 @@ const addToCartFromCard = (id) => {
     showNotification("Välj antal först!", "error");
   }
 };
-
+/**
+ * Lägger till produkt i varukorgen
+ */
 const addToCart = (id, qty = 1) => {
   const product = products.find(p => p.id === id);
   const item = cart.find(i => i.id === id);
+
+  // om produkten redan finns, äka antal
+
   item ? item.qty += qty : cart.push({ ...product, qty });
   updateCartCounter();
   showNotification(`${product.name} tillagd!`);
 };
-
+/** 
+ * tar bort produkt helt från varukorgen
+*/
 const removeFromCart = (id) => {
   const product = cart.find(item => item.id === id);
   cart = cart.filter(item => item.id !== id);
@@ -81,20 +114,34 @@ const removeFromCart = (id) => {
   renderCart();
   showNotification(`${product.name} borttagen!`);
 };
+/** 
+ * uppdaterar räknaren på varukorgsikonen
+*/
 
 const updateCartCounter = () => {
   document.getElementById("cart-counter").textContent = cart.reduce((sum, i) => sum + i.qty, 0);
 };
-
+//=============
 // MODALS
+//================
+/**
+ * öppnar varukorgmodal
+ */
 const openCartModal = () => {
   renderCart();
   document.getElementById("cart-modal").classList.remove("hidden");
 };
 
+/**
+ * Stänger valfri modal via id
+ */
+
 const closeModal = (id) => {
   document.getElementById(id).classList.add("hidden");
 };
+/**
+ * Renderar innehållet i varukorgen
+ */
 
 const renderCart = () => {
   const container = document.getElementById("cart-items");
@@ -121,6 +168,10 @@ const renderCart = () => {
   totalPrice.textContent = cart.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2);
 };
 
+/**
+ * Öppnar produkt-modal med detaljer
+ */
+
 const openProductModal = (product) => {
   currentProduct = product;
   modalQty = 0;
@@ -135,16 +186,24 @@ const openProductModal = (product) => {
 
   document.getElementById("product-modal").classList.remove("hidden");
 };
+/**
+ * Stänger produkt-modal
+ */
 
 const closeProductModal = () => {
   document.getElementById("product-modal").classList.add("hidden");
 };
+/**
+ * Ändrar antal i produkt-modal
+ */
 
 const changeModalQty = (amount) => {
   modalQty = Math.max(0, modalQty + amount);
   document.getElementById("modal-qty").textContent = modalQty + " st";
 };
-
+/**
+ * Lägger vald produkt från modal till varukorgen
+ */
 const addModalToCart = () => {
   if (modalQty > 0) {
     addToCart(currentProduct.id, modalQty);
@@ -152,7 +211,12 @@ const addModalToCart = () => {
   }
 };
 
-// NOTIFICATIONS
+// =========================
+// NOTIFIERINGAR
+// ========================
+/**
+ * Visar en tillfällig notifiering
+ */
 const showNotification = (message, type = 'success') => {
   const notification = document.createElement('div');
   notification.className = `notification notification-${type}`;
@@ -170,7 +234,12 @@ const showNotification = (message, type = 'success') => {
   setTimeout(() => notification.remove(), 3000);
 };
 
-// LOAD PRODUCTS
+// =========================
+// PRODUKTLADDNING & MENY
+// =========================
+/**
+ * Laddar produkter baserat på vald kategori
+ */
 const loadProducts = () => {
   const category = document.body.dataset.category || "all";
   const container = document.getElementById("product-container");
@@ -179,10 +248,14 @@ const loadProducts = () => {
   container.innerHTML = "";
   list.forEach(p => container.appendChild(p.createCard()));
 };
+/**
+ * Öppnar/stänger mobilmeny
+ */
 
 const toggleMenu = () => {
   document.getElementById("category-nav").classList.toggle("open");
 };
-
-// START
+//=============
+// STARTPUNKT
+//================
 document.addEventListener("DOMContentLoaded", init);
